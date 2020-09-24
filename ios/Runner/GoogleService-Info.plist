@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>959816353291-478u13n406sremden4l57gtgrt8nv3oh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.959816353291-478u13n406sremden4l57gtgrt8nv3oh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCIoWG_tCaNqRZ4gtkFSUnC9lb8Jl6aGDY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>959816353291</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>personal.project.piggybank</string>
+	<key>PROJECT_ID</key>
+	<string>coin-ucsd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>coin-ucsd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:959816353291:ios:d739cbc752f1118ba0e90e</string>
+	<key>DATABASE_URL</key>
+	<string>https://coin-ucsd.firebaseio.com</string>
+</dict>
+</plist>
