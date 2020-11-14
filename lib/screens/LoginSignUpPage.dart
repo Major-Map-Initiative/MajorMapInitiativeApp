@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:myapp/BaseAuth.dart';
 import 'package:myapp/appIcons_icons.dart' as prefix;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback});
@@ -24,7 +25,8 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
 
   bool _isLoginForm;
   bool _isLoading;
-
+  bool showProfileSetUp;
+  bool emailSent  = false;
   // Check if form is valid before perform login or signup
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -46,12 +48,12 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
       try {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
-          print('Signed in: $userId');
         } else {
           userId = await widget.auth.signUp(_email, _password);
           widget.auth.sendEmailVerification();
-          //_showVerifyEmailSentDialog();
-          print('Signed up user: $userId');
+          setState((){
+            emailSent = true;
+          });
         }
         setState(() {
           _isLoading = false;
@@ -75,28 +77,29 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
       child: new TextFormField(
+        showCursor: true,
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
-        decoration: new InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+        decoration:  InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
             ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade900),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
             ),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade900),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
             ),
             hintText: 'Email',
             labelStyle: TextStyle(color: Colors.black),
             icon: new Icon(
               prefix.Icons.uniF1A9,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value.trim(),
-        cursorColor: Colors.white,
+        cursorColor: Colors.black,
       ),
     );
   }
@@ -110,6 +113,17 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
             children: <Widget>[
               showEmailInput(),
               showPasswordInput(),
+              Padding(
+                padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical ),
+                child: Text("forgot password?",
+                    style: TextStyle(fontSize: SizeConfig.safeBlockVertical ,
+                      letterSpacing: 0,
+                      color: Colors.black,
+                      fontFamily: "Comfortaa",
+                    ),
+                  textAlign: TextAlign.right,
+                ),
+              ),
               showPrimaryButton(),
               showSecondaryButton(),
               showErrorMessage(),
@@ -119,25 +133,42 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
   }
   Widget showSecondaryButton() {
     return new FlatButton(
-        child: new Text(
-            _isLoginForm ? 'create an account' : 'Have an account? Sign in',
-            style: new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3,
-              letterSpacing: 0,
-              color: Colors.black.withOpacity(1),
-              fontFamily: "Comfortaa",
-            )),
+        child:  Padding(
+          padding:  EdgeInsets.only(top: SizeConfig.safeBlockVertical * 30, bottom: SizeConfig.safeBlockVertical * .1),
+          child: Text(
+              _isLoginForm ? 'create an account' : 'Have an account? Sign in',
+              style: new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3,
+                letterSpacing: 0,
+                color: Colors.black,
+                fontFamily: "Comfortaa",
+              )),
+        ),
         onPressed: toggleFormMode);
   }
 
   Widget showPrimaryButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
         child: SizedBox(
           height: 40.0,
           child: new FlatButton(
-            color: Colors.yellow,
+            color: MaterialColor(
+              0xFF182B49,
+              <int, Color>{
+                50: Color(0xFF0000A0),
+                100: Color(0xFF182B49),
+                200: Color(0xFF182B49),
+                300: Color(0xFF182B49),
+                400: Color(0xFF182B49),
+                500: Color(0xFF182B49),
+                600: Color(0xFF182B49),
+                700: Color(0xFF182B49),
+                800: Color(0xFF182B49),
+                900: Color(0xFF182B49),
+              },
+            ).shade100,
             child: new Text(
-                _isLoginForm ? 'login' : 'Create an account',
+                _isLoginForm ? 'login' : (emailSent ? "Email sent for verification":'Create an account'),
                 style: new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5,
     letterSpacing: 1,
     fontWeight: FontWeight.bold,
@@ -174,24 +205,24 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
             ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade900),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
             ),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade900),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
             ),
             hintText: 'Password',
             labelStyle: TextStyle(color: Colors.black),
             icon: new Icon(
               prefix.Icons.uniF1C7,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _password = value.trim(),
-        cursorColor: Colors.white,
+        cursorColor: Colors.black,
       ),
     );
   }
@@ -223,88 +254,82 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
       DeviceOrientation.portraitDown,
     ]);
     return new Scaffold(
-      backgroundColor: MaterialColor(
-        0xFF182B49,
-        <int, Color>{
-          50: Color(0xFF182B49),
-          100: Color(0xFF182B49),
-          200: Color(0xFF182B49),
-          300: Color(0xFF182B49),
-          400: Color(0xFF182B49),
-          500: Color(0xFF182B49),
-          600: Color(0xFF182B49),
-          700: Color(0xFF182B49),
-          800: Color(0xFF182B49),
-          900: Color(0xFF182B49),
-        },
-      ),
-        appBar: AppBar(
-          title: Text(
-            "major map initiative",
-            style: TextStyle(
-              fontSize: SizeConfig.safeBlockHorizontal * 5,
-              letterSpacing: 4,
-              fontWeight: FontWeight.bold,
-              fontFamily: "Comfortaa",
-            ),
-          ),
-          backgroundColor: MaterialColor(
-            0xFF182B49,
-            <int, Color>{
-              50: Color(0xFF182B49),
-              100: Color(0xFF182B49),
-              200: Color(0xFF182B49),
-              300: Color(0xFF182B49),
-              400: Color(0xFF182B49),
-              500: Color(0xFF182B49),
-              600: Color(0xFF182B49),
-              700: Color(0xFF182B49),
-              800: Color(0xFF182B49),
-              900: Color(0xFF182B49),
-            },
-          ),
-          centerTitle: true,
-        ),
-        body: Stack(
+
+        body: Column(
           children: <Widget>[
-          Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-            Container(
-              margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-              alignment: Alignment.center,
-              color: MaterialColor(
-                0xFF182B49,
-                <int, Color>{
-                  50: Color(0xFF182B49),
-                  100: Color(0xFF182B49),
-                  200: Color(0xFF182B49),
-                  300: Color(0xFF182B49),
-                  400: Color(0xFF182B49),
-                  500: Color(0xFF182B49),
-                  600: Color(0xFF182B49),
-                  700: Color(0xFF182B49),
-                  800: Color(0xFF182B49),
-                  900: Color(0xFF182B49),
-                },
+            Center(
+              child: Padding(
+                  padding: EdgeInsets.only(top:SizeConfig.blockSizeVertical * 20 ),
+                child: Row(
+                  children: [
+
+                    Padding(
+                      padding: EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 15),
+                      child: Text(
+                            "major",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
+                              letterSpacing: 4,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Comfortaa",
+                            ),
               ),
-              padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 3),
-              child: FadeAnimatedTextKit(
-                text: ["welcome"],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                textStyle: TextStyle(
-                  fontSize: SizeConfig.safeBlockHorizontal * 8,
-                  letterSpacing: 3,
-                  color: Colors.grey.withOpacity(1),
-                  fontFamily: "Comfortaa",
+                    ),
+
+                    Text(
+                      " map",
+                      style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 5,
+                        letterSpacing: 4,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Comfortaa",
+                        color: MaterialColor(
+                          0xFF182B49,
+                          <int, Color>{
+                            50: Color(0xFF0000A0),
+                            100: Color(0xFF182B49),
+                            200: Color(0xFF182B49),
+                            300: Color(0xFF182B49),
+                            400: Color(0xFF182B49),
+                            500: Color(0xFF182B49),
+                            600: Color(0xFF182B49),
+                            700: Color(0xFF182B49),
+                            800: Color(0xFF182B49),
+                            900: Color(0xFF182B49),
+                          },
+                        ).shade50,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 10),
+                      child: Text(
+                        " initiative",
+                        style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 5,
+                          letterSpacing: 4,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Comfortaa",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ]),
             _showForm(),
           ],
         ));
+  }
+  Future<bool> isFirstRun() async {
+    final preferences = await SharedPreferences.getInstance();
+    showProfileSetUp = (preferences.getBool('showProfileSetup') ?? false);
+    return (preferences.getBool('firstRun') ?? true);
+  }
+
+
+  void setFirstRun() async {
+    final preferences = await SharedPreferences.getInstance();
+    preferences.setBool('firstRun', false);
+    preferences.setBool('showProfileSetup', true);
   }
 }

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:myapp/screens/LoginSignUpPage.dart';
 import 'package:myapp/BaseAuth.dart';
 import 'package:myapp/screens/homePage.dart';
+import 'package:myapp/screens/profileSetUp.dart';
 import 'package:myapp/timer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'navigation/route_paths.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -12,9 +16,10 @@ enum AuthStatus {
 }
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth});
+  RootPage({this.auth, this.showProfileSetUp});
 
   final BaseAuth auth;
+  final bool showProfileSetUp;
 
   @override
   State<StatefulWidget> createState() => new _RootPageState();
@@ -23,10 +28,11 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
-
+  bool showProfileSetUp;
   @override
   void initState() {
     super.initState();
+    showProfileSetUp = widget.showProfileSetUp;
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
@@ -79,11 +85,17 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null  )  {
-         return new homePage(
-            userId: _userId,
-            auth: widget.auth,
-            logoutCallback: logoutCallback,
-          );
+
+            if(showProfileSetUp){
+              return new ProfileSetUp();
+            }else{
+              return new HomePage(
+                userId: _userId,
+                auth: widget.auth,
+                logoutCallback: logoutCallback,
+              );
+            }
+
         } else
           return buildWaitingScreen();
         break;
@@ -91,4 +103,13 @@ class _RootPageState extends State<RootPage> {
         return buildWaitingScreen();
     }
   }
+
+
+  void setFirstRun() async {
+    final preferences = await SharedPreferences.getInstance();
+    preferences.setBool('firstRun', false);
+    preferences.setBool('showProfileSetup', true);
+  }
+
+
 }
