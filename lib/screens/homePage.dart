@@ -1,9 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myapp/sizingTools/sizeConfig.dart';
+import 'package:myapp/providers/user_provider.dart';
+import 'package:myapp/tools/router_paths.dart';
+import 'package:myapp/tools/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/BaseAuth.dart';
+import 'package:myapp/services/firebase_authentication_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/material/icons.dart' as defaultIcons;
@@ -16,14 +19,16 @@ class HomePage extends StatefulWidget {
   final BaseAuth auth;
   final VoidCallback logoutCallback;
   final String userId;
-  final String eventsFeedEndpoint = "https://o94b6gq4pf.execute-api.us-west-2.amazonaws.com/qa";
+  final String eventsFeedEndpoint =
+      "https://o94b6gq4pf.execute-api.us-west-2.amazonaws.com/qa";
   @override
   State<StatefulWidget> createState() => new _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   Dio dio = new Dio();
-  final String eventsFeedEndpoint = "https://o94b6gq4pf.execute-api.us-west-2.amazonaws.com/qa";
+  final String eventsFeedEndpoint =
+      "https://o94b6gq4pf.execute-api.us-west-2.amazonaws.com/qa";
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     SystemChrome.setPreferredOrientations([
@@ -31,10 +36,12 @@ class _HomePageState extends State<HomePage> {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
-      backgroundColor: Colors.white,
+
+      backgroundColor: Colors.grey.shade900,
+      //backgroundColor: Colors.grey.shade100,
       drawer: Drawer(
         child: Container(
-          color: Colors.grey.withOpacity(.3) ,
+          color: Colors.blueGrey,
           child: ListView(
             padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 2),
             children: <Widget>[
@@ -171,9 +178,7 @@ class _HomePageState extends State<HomePage> {
                 )),
                 onTap: () {
                   signOut();
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
+
                 },
               ),
             ],
@@ -183,216 +188,201 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueGrey,
         bottom: PreferredSize(
-        child: Container(
-        color: Colors.grey,
-        height: 0.5,
-        ),
+          child: Container(
+            color: Colors.grey,
+            height: 0.5,
+          ),
         ),
         title: Text(
           "major map initiative",
           style: TextStyle(
             fontSize: SizeConfig.safeBlockHorizontal * 6,
             fontWeight: FontWeight.bold,
-            color:Colors.black,
+            color: Colors.black,
             fontFamily: "Comfortaa",
           ),
         ),
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-            children: <Widget>[
+        child: Column(children: <Widget>[
           Padding(
             padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
           ),
-
           Padding(
             padding: EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 4),
           ),
           Center(
-            child: Text("Upcoming Important Dates",
-            style:   TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 4,
-                letterSpacing: 1,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Comfortaa"),
+            child: Text(
+              "Upcoming Important Dates",
+              style: TextStyle(
+                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  letterSpacing: 1,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Comfortaa"),
             ),
           ),
           Container(
             height: SizeConfig.safeBlockVertical * 15,
-            padding: EdgeInsets.only(left: SizeConfig.safeBlockVertical * 3, right:SizeConfig.safeBlockVertical * 3 ),
+            padding: EdgeInsets.only(
+                left: SizeConfig.safeBlockVertical * 3,
+                right: SizeConfig.safeBlockVertical * 3),
             child: Center(
               child: ListView(
                 shrinkWrap: true,
                 semanticChildCount: 10,
                 children: [
-                    FutureBuilder(
-                      future:  dio.get(eventsFeedEndpoint),
-                      builder: (context, snapshot){
-                        if(snapshot.hasData && snapshot.connectionState == ConnectionState.done){
-                          var rawResponse =  (snapshot.data as Response).data;
-                          String stringResponse= "";
-                            for(String event in rawResponse.values){
-                              stringResponse += (event +'\n');
-                            }
-                            return Center(
-                              child: Text(
-                                stringResponse,
+                  FutureBuilder(
+                    future: dio.get(eventsFeedEndpoint),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.connectionState == ConnectionState.done) {
+                        var rawResponse = (snapshot.data as Response).data;
+                        String stringResponse = "";
+                        for (String event in rawResponse.values) {
+                          stringResponse += (event + " 11/1 " + '\n');
+                        }
+                        return Center(
+                          child: Text(stringResponse,
                               textAlign: TextAlign.center,
-                              style:   TextStyle(
+                              style: TextStyle(
+                                color: Colors.white,
                                   fontSize: SizeConfig.safeBlockHorizontal * 3,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Comfortaa")),
-                            );
-                        }else{
-                          return CircularProgressIndicator();
-                        }
-                      },
-                    ),
-                  Padding(
-                    padding: EdgeInsets.all(2.0),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
                   ),
-
                 ],
               ),
             ),
           ),
+          // Card(
+          //   elevation: 20.0,
+          //   child: Container(
+          //     child: Center(child: Text("Degree Roadmap")),
+          //     color: Colors.black,
+          //     //Image.asset("assets/degree_roadmap.jpg"),
+          //     height: 100,
+          //     width: 200,
+          //   ),
+          // ),
+          Padding(padding: EdgeInsets.only(bottom: 70.0)),
+          CarouselSlider(scrollDirection: Axis.horizontal, height: 264, items: [
+            Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              elevation: 10.0,
+              child: Container(
+                width: 282,
+                child: Column(children: [
+                  Container(
+                    child: Image.asset("assets/classes.jpg"),
+                    height: 200,
+                    width: 400,
+                  ),
+                  ListTile(
+                    title: Center(child: Text("Class Lookup")),
+                    tileColor: Colors.grey.shade200,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2.0)),
+                  )
+                ]),
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              elevation: 10.0,
+              shadowColor: Colors.grey,
+              child: Container(
+                width: 282,
+                child: Column(children: [
+                  Container(
+                    child: Image.asset("assets/class_history.jpg"),
+                    height: 200,
+                    width: 400,
+                  ),
+                  ListTile(
+                    title: Center(child: Text("Class History")),
+                    tileColor: Colors.grey.shade200,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2.0)),
+                  )
+                ]),
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              elevation: 10.0,
+              shadowColor: Colors.grey,
+              child: Container(
+                width: 282,
+                child: Column(children: [
+                  Container(
+                    child: Image.asset("assets/calendar.jpg"),
+                    height: 200,
+                    width: 400,
+                  ),
+                  ListTile(
+                    title: Center(child: Text("Calendar")),
+                    tileColor: Colors.grey.shade200,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2.0)),
+                  )
+                ]),
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              elevation: 10.0,
+              shadowColor: Colors.grey,
+              child: Container(
+                width: 282,
+                child: Column(children: [
+                  Container(
+                    child: Image.asset("assets/events.jpg"),
+                    height: 200,
+                    width: 400,
+                  ),
+                  ListTile(
+                    title: Center(child: Text("Events")),
+                    tileColor: Colors.grey.shade200,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2.0)),
+                  )
+                ]),
+              ),
+            ),
+          ]),
           Padding(
-            padding:
-                EdgeInsets.only(bottom: SizeConfig.safeBlockHorizontal * 20),
+            padding: EdgeInsets.all(SizeConfig.safeBlockVertical),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Card(
-          color: Color(0xFF182B49),
-                  shape: RoundedRectangleBorder(
-                      side: new BorderSide(color:   Color(0xFF182B49),
-                      width: 1.0),
-                      borderRadius: BorderRadius.circular(4.0)),
-                  margin: EdgeInsets.all(10.0),
-                  semanticContainer: false,
-                  child: Container(
-                    width: double.infinity,
-                    constraints: BoxConstraints(minHeight: 100, maxHeight: 210),
-                    child: Center(
-                      child: Text(
-                        "class lookup",
-                        style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 4,
-                          letterSpacing: 2,
-                          color: Colors.yellow,
-                          fontFamily: "Comfortaa",
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  color: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    side: new BorderSide(color:Color(0xFF182B49), width: 1.0),),
-                  margin: EdgeInsets.all(10.0),
-
-                  semanticContainer: false,
-                  child: Container(
-                    width: double.infinity,
-                    constraints: BoxConstraints(minHeight: 100, maxHeight: 210),
-                    child: Center(
-                      child: Text(
-                        "class history",
-                        style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 4,
-                          letterSpacing: 2,
-                          color: Color(0xFF182B49),
-                          fontFamily: "Comfortaa",
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          Row(
-            children: [
-              Expanded(
-                child: Card(
-                  color: Colors.yellow,
-                  margin: EdgeInsets.all(10.0),
-                  shape: RoundedRectangleBorder(
-                    side: new BorderSide(color: Color(0xFF182B49), width: 1.0),),
-                  semanticContainer: false,
-                  child: Container(
-                    width: double.infinity,
-                    constraints: BoxConstraints(minHeight: 100, maxHeight: 210),
-                    child: Center(
-                      child: Text(
-                        "view calendar",
-                        style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 4,
-                          letterSpacing: 2,
-                          color: Color(0xFF182B49),
-                          fontFamily: "Comfortaa",
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  margin: EdgeInsets.all(10.0),
-                  color: Color(0xFF182B49),
-
-                  semanticContainer: false,
-                  shape: RoundedRectangleBorder(
-                    side: new BorderSide(color:  Colors.yellow
-                    , width: 1.0),),
-                  child: Container(
-                    width: double.infinity,
-
-                    constraints: BoxConstraints(minHeight: 100, maxHeight: 210),
-                    child: Center(
-                      child: Text(
-                        "view events",
-                        style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 4,
-                          letterSpacing: 2,
-                          color: Colors.yellow,
-                          fontFamily: "Comfortaa",
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          Text(
+            sayHello(),
+            style: TextStyle(
+              fontSize: SizeConfig.safeBlockHorizontal * 2,
+              letterSpacing: 2,
+              fontFamily: "Comfortaa",
+              color: Colors.white
+            ),
           ),
           Padding(
-            padding: EdgeInsets.all(SizeConfig.safeBlockVertical ),
+            padding: EdgeInsets.all(SizeConfig.safeBlockVertical * .5),
           ),
-              Text(
-                sayHello(),
-                style: TextStyle(
-                  fontSize: SizeConfig.safeBlockHorizontal * 2,
-                  letterSpacing: 2,
-                  fontFamily: "Comfortaa",
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(SizeConfig.safeBlockVertical * .5),
-              ),
           Text(
             tellDate(),
             style: TextStyle(
               fontSize: SizeConfig.safeBlockHorizontal * 2,
               letterSpacing: 2,
+              color: Colors.white,
               fontFamily: "Comfortaa",
             ),
           ),
@@ -437,14 +427,16 @@ class _HomePageState extends State<HomePage> {
         year.toString();
     return toReturn;
   }
+
   signOut() async {
     try {
-      await widget.auth.signOut();
-      widget.logoutCallback();
+      UserProvider().logOut();
+      Navigator.pushNamed(context, RoutePaths.Login);
     } catch (e) {
       print(e);
     }
   }
+
   String tellWeekday(int weekday) {
     if (weekday == DateTime.sunday) {
       return "Sunday";

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/sizingTools/sizeConfig.dart';
+import 'package:myapp/tools/sizeConfig.dart';
 
 class ProfileSetUp extends StatefulWidget{
   @override

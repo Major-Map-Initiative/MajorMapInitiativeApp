@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/screens/LoginSignUpPage.dart';
-import 'package:myapp/BaseAuth.dart';
+import 'package:myapp/services/firebase_authentication_service.dart';
 import 'package:myapp/screens/homePage.dart';
 import 'package:myapp/screens/profileSetUp.dart';
-import 'package:myapp/timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'navigation/route_paths.dart';

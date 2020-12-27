@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/sizingTools/sizeConfig.dart';
+import 'package:myapp/tools/sizeConfig.dart';
 import 'package:flutter/services.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:myapp/BaseAuth.dart';
-import 'package:myapp/appIcons_icons.dart' as prefix;
+import 'package:myapp/services/firebase_authentication_service.dart';
+import 'package:myapp/tools/appIcons_icons.dart' as prefix;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginSignupPage extends StatefulWidget {
@@ -254,6 +254,8 @@ class _LoginSignupPageState extends State<LoginSignupPage>{
       DeviceOrientation.portraitDown,
     ]);
     return new Scaffold(
+
+      backgroundColor: Colors.white,
 
         body: Column(
           children: <Widget>[
