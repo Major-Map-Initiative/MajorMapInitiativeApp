@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/user_provider.dart';
 import 'package:myapp/root.dart';
@@ -13,9 +14,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'services/firebase_authentication_service.dart';
 import 'navigation/router.dart' as myRouter;
 var showProfileSetUp = false;
+bool loggedInUser;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await isFirstRun();
+  loggedInUser = await checkIfLoggedIn();
   runApp(MajorMapInitiativeApp());
 }
 Future<bool> isFirstRun() async {
@@ -24,6 +26,9 @@ Future<bool> isFirstRun() async {
   return (preferences.getBool('firstRun') ?? true);
 }
 
+  Future<bool> checkIfLoggedIn() async{
+    return UserProvider().isLoggedIn();
+  }
 
 class MajorMapInitiativeApp extends StatelessWidget {
   @override
@@ -39,7 +44,7 @@ class MajorMapInitiativeApp extends StatelessWidget {
         title: "Major Map Initiative App",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: "SFPro"),
-        initialRoute:  RoutePaths.Login,
+        initialRoute:  loggedInUser ? RoutePaths.Home :RoutePaths.Login,
         onGenerateRoute: myRouter.Router.generateRoute,
       ),
     );

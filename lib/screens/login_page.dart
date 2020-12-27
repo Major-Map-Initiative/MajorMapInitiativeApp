@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/user_provider.dart';
@@ -121,24 +124,36 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  AlertDialog errorDialog(BuildContext context) {
+  CupertinoAlertDialog errorDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = Platform.isIOS ? CupertinoButton(
       child: Text("OK"),
       onPressed: () {
         Navigator.of(context).pop();
       },
-    );
+    ) : FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    ) ;
 
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Sorry, unable to sign you in"),
+    Widget alert = Platform.isIOS ? CupertinoAlertDialog(
+      title: Text("Unable To Sign You In"),
       content: Text(
           "Be sure you are using the correct credentials. Otherwise create an account."),
       actions: [
         okButton,
       ],
-    );
+    ) : AlertDialog(
+      title: Text("Unable To Sign You In"),
+      content: Text(
+          "Be sure you are using the correct credentials. Otherwise create an account."),
+      actions: [
+        okButton,
+      ],
+    ) ;
 
     // show the dialog
     showDialog(

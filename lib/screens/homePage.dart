@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,9 @@ class _HomePageState extends State<HomePage> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return Scaffold(
+    
+    return !Platform.isIOS ?
+    Scaffold(
 
       backgroundColor: Colors.grey.shade900,
       //backgroundColor: Colors.grey.shade100,
@@ -391,7 +395,82 @@ class _HomePageState extends State<HomePage> {
           ),
         ]),
       ),
-    );
+    ) :  CupertinoTabScaffold(tabBar: CupertinoTabBar(
+      backgroundColor: CupertinoColors.lightBackgroundGray,
+    activeColor: MaterialColor(
+      0xFF182B49,
+      <int, Color>{
+        50: Color(0xFF182B49),
+        100: Color(0xFF182B49),
+        200: Color(0xFF182B49),
+        300: Color(0xFF182B49),
+        400: Color(0xFF182B49),
+        500: Color(0xFF182B49),
+        600: Color(0xFF182B49),
+        700: Color(0xFF182B49),
+        800: Color(0xFF182B49),
+        900: Color(0xFF182B49),
+      },
+    ),
+    inactiveColor: CupertinoColors.inactiveGray,
+    items: <BottomNavigationBarItem> [
+    BottomNavigationBarItem(
+      icon: Icon(defaultIcons.Icons.home),
+      label: "Home",
+    ),
+      BottomNavigationBarItem(
+        icon:  Icon(defaultIcons.Icons.map),
+        label: "Degree Roadmap",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(defaultIcons.Icons.people),
+        label: "Community",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(defaultIcons.Icons.person),
+        label: "Profile",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(defaultIcons.Icons.table_rows_rounded),
+        label: "More",
+      )
+    ],
+    ),
+    tabBuilder: (BuildContext context, int index){
+      return CupertinoTabView(
+        builder: (BuildContext context) {
+          return CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: Text('Page 1 of tab $index'),
+            ),
+            child: Center(
+              child: CupertinoButton(
+                child: const Text('Next page'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    CupertinoPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return CupertinoPageScaffold(
+                          navigationBar: CupertinoNavigationBar(
+                            middle: Text('Page 2 of tab $index'),
+                          ),
+                          child: Center(
+                            child: CupertinoButton(
+                              child: const Text('Back'),
+                              onPressed: () { Navigator.of(context).pop(); },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 
   String sayHello() {
