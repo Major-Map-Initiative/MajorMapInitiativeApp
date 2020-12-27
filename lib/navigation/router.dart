@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/navigation/route_paths.dart';
 import 'package:myapp/screens/LoginSignUpPage.dart';
-import 'package:myapp/screens/homePage.dart';
+import 'package:myapp/screens/home_page.dart';
 import 'package:myapp/screens/login_page.dart';
 import 'package:myapp/screens/profileSetUp.dart';
 

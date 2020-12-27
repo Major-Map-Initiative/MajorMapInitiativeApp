@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/screens/LoginSignUpPage.dart';
 import 'package:myapp/services/firebase_authentication_service.dart';
-import 'package:myapp/screens/homePage.dart';
+import 'package:myapp/screens/home_page.dart';
 import 'package:myapp/screens/profileSetUp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

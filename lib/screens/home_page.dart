@@ -395,7 +395,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ]),
       ),
-    ) :  CupertinoTabScaffold(tabBar: CupertinoTabBar(
+    ) :  CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          onTap: (index){
+
+          },
       backgroundColor: CupertinoColors.lightBackgroundGray,
     activeColor: MaterialColor(
       0xFF182B49,
@@ -427,12 +431,8 @@ class _HomePageState extends State<HomePage> {
         label: "Community",
       ),
       BottomNavigationBarItem(
-        icon: Icon(defaultIcons.Icons.person),
-        label: "Profile",
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(defaultIcons.Icons.table_rows_rounded),
-        label: "More",
+        icon: Icon(defaultIcons.Icons.calendar_today),
+        label: "Calendar",
       )
     ],
     ),
@@ -440,8 +440,19 @@ class _HomePageState extends State<HomePage> {
       return CupertinoTabView(
         builder: (BuildContext context) {
           return CupertinoPageScaffold(
+         //   backgroundColor: CupertinoColors.darkBackgroundGray,
             navigationBar: CupertinoNavigationBar(
-              middle: Text('Page 1 of tab $index'),
+              middle: Text('Major Map Initiative',
+                style: TextStyle(
+                  fontSize: 20
+                ),
+              ),
+              trailing: CupertinoButton(
+                child: Icon(defaultIcons.Icons.person,
+                  //color: CupertinoColors.black,
+                ),
+                onPressed: (){},
+              )
             ),
             child: Center(
               child: CupertinoButton(
