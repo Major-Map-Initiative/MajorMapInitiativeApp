@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/navigation/router_paths.dart';
@@ -35,7 +37,12 @@ class _ProfileState extends State<ProfileSetUp>{
         color: CupertinoColors.systemRed,
         onPressed: (){
           _userProvider.logOut();
-          Navigator.of(context, rootNavigator: true).pop(context);
+          if(Platform.isAndroid){
+            Navigator.pushNamed(context, RoutePaths.Login);
+          }else{
+            Navigator.of(context, rootNavigator: true).pop(context);
+
+          }
 
         },
       ),

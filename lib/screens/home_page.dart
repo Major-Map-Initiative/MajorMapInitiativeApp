@@ -30,9 +30,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+
   Dio dio = new Dio();
   final String eventsFeedEndpoint =
       "https://o94b6gq4pf.execute-api.us-west-2.amazonaws.com/qa";
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     SystemChrome.setPreferredOrientations([
@@ -42,361 +50,46 @@ class _HomePageState extends State<HomePage> {
     
     return !Platform.isIOS ?
     Scaffold(
+    appBar: AppBar(
+      leading: Container(),
+      centerTitle: true,
+      title: Text("Major Map Initiative"),
+     actions: [IconButton(
+       icon: Icon(defaultIcons.Icons.person),
+       onPressed: (){
+         Navigator.of(context ).push(
+           new MaterialPageRoute(
+               fullscreenDialog: true,
+               builder: (_) => ProfileSetUp()
+           ),
+         );
+       },
+     )],
+    ),
+      body: Center(),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem> [
+          BottomNavigationBarItem(
+            icon: Icon(defaultIcons.Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon:  Icon(defaultIcons.Icons.map),
+            label: "Degree Map",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(defaultIcons.Icons.people),
+            label: "Community",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(defaultIcons.Icons.calendar_today),
+            label: "Calendar",
+          )
+        ],
+        currentIndex: _selectedIndex,
+      ),
 
-      backgroundColor: Colors.grey.shade900,
-      //backgroundColor: Colors.grey.shade100,
-      drawer: Drawer(
-        child: Container(
-          color: Colors.blueGrey,
-          child: ListView(
-            padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 2),
-            children: <Widget>[
-              SizedBox(
-                height: SizeConfig.safeBlockVertical * .01,
-              ),
-              Container(
-                height: SizeConfig.safeBlockVertical * 17,
-                child: DrawerHeader(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "major map initiative",
-                          style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 4,
-                            letterSpacing: 1,
-                            fontFamily: "Comfortaa",
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-                        ),
-                        Text(
-                          "Peter Gonzalez",
-                          style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 2,
-                            letterSpacing: 4,
-                            fontFamily: "Comfortaa",
-                          ),
-                        )
-                      ]),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 4,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-                leading: (Icon(
-                  defaultIcons.Icons.home,
-                )),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Classes',
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 4,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-                leading: (Icon(
-                  defaultIcons.Icons.book,
-                )),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Degree Road Map',
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 4,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-                leading: Icon(
-                  defaultIcons.Icons.map,
-                ),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Community',
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 4,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-                leading: Icon(
-                  defaultIcons.Icons.people,
-                ),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 4,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-                leading: (Icon(
-                  defaultIcons.Icons.settings,
-                )),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Log out',
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 4,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-                leading: (Icon(
-                  defaultIcons.Icons.exit_to_app,
-                )),
-                onTap: () {
-                  signOut();
-
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0.0,
-        backgroundColor: Colors.blueGrey,
-        bottom: PreferredSize(
-          child: Container(
-            color: Colors.grey,
-            height: 0.5,
-          ),
-        ),
-        title: Text(
-          "major map initiative",
-          style: TextStyle(
-            fontSize: SizeConfig.safeBlockHorizontal * 6,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontFamily: "Comfortaa",
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 4),
-          ),
-          Center(
-            child: Text(
-              "Upcoming Important Dates",
-              style: TextStyle(
-                  fontSize: SizeConfig.safeBlockHorizontal * 4,
-                  letterSpacing: 1,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Comfortaa"),
-            ),
-          ),
-          Container(
-            height: SizeConfig.safeBlockVertical * 15,
-            padding: EdgeInsets.only(
-                left: SizeConfig.safeBlockVertical * 3,
-                right: SizeConfig.safeBlockVertical * 3),
-            child: Center(
-              child: ListView(
-                shrinkWrap: true,
-                semanticChildCount: 10,
-                children: [
-                  FutureBuilder(
-                    future: dio.get(eventsFeedEndpoint),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData &&
-                          snapshot.connectionState == ConnectionState.done) {
-                        var rawResponse = (snapshot.data as Response).data;
-                        String stringResponse = "";
-                        for (String event in rawResponse.values) {
-                          stringResponse += (event + " 11/1 " + '\n');
-                        }
-                        return Center(
-                          child: Text(stringResponse,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 3,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Comfortaa")),
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-          // Card(
-          //   elevation: 20.0,
-          //   child: Container(
-          //     child: Center(child: Text("Degree Roadmap")),
-          //     color: Colors.black,
-          //     //Image.asset("assets/degree_roadmap.jpg"),
-          //     height: 100,
-          //     width: 200,
-          //   ),
-          // ),
-          Padding(padding: EdgeInsets.only(bottom: 70.0)),
-          CarouselSlider(scrollDirection: Axis.horizontal, height: 264, items: [
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              elevation: 10.0,
-              child: Container(
-                width: 282,
-                child: Column(children: [
-                  Container(
-                    child: Image.asset("assets/classes.jpg"),
-                    height: 200,
-                    width: 400,
-                  ),
-                  ListTile(
-                    title: Center(child: Text("Class Lookup")),
-                    tileColor: Colors.grey.shade200,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0)),
-                  )
-                ]),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              elevation: 10.0,
-              shadowColor: Colors.grey,
-              child: Container(
-                width: 282,
-                child: Column(children: [
-                  Container(
-                    child: Image.asset("assets/class_history.jpg"),
-                    height: 200,
-                    width: 400,
-                  ),
-                  ListTile(
-                    title: Center(child: Text("Class History")),
-                    tileColor: Colors.grey.shade200,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0)),
-                  )
-                ]),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              elevation: 10.0,
-              shadowColor: Colors.grey,
-              child: Container(
-                width: 282,
-                child: Column(children: [
-                  Container(
-                    child: Image.asset("assets/calendar.jpg"),
-                    height: 200,
-                    width: 400,
-                  ),
-                  ListTile(
-                    title: Center(child: Text("Calendar")),
-                    tileColor: Colors.grey.shade200,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0)),
-                  )
-                ]),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              elevation: 10.0,
-              shadowColor: Colors.grey,
-              child: Container(
-                width: 282,
-                child: Column(children: [
-                  Container(
-                    child: Image.asset("assets/events.jpg"),
-                    height: 200,
-                    width: 400,
-                  ),
-                  ListTile(
-                    title: Center(child: Text("Events")),
-                    tileColor: Colors.grey.shade200,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0)),
-                  )
-                ]),
-              ),
-            ),
-          ]),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.safeBlockVertical),
-          ),
-          Text(
-            sayHello(),
-            style: TextStyle(
-              fontSize: SizeConfig.safeBlockHorizontal * 2,
-              letterSpacing: 2,
-              fontFamily: "Comfortaa",
-              color: Colors.white
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.safeBlockVertical * .5),
-          ),
-          Text(
-            tellDate(),
-            style: TextStyle(
-              fontSize: SizeConfig.safeBlockHorizontal * 2,
-              letterSpacing: 2,
-              color: Colors.white,
-              fontFamily: "Comfortaa",
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-          ),
-        ]),
-      ),
     ) :  CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           onTap: (index){
@@ -458,7 +151,6 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context ).push(
                     new CupertinoPageRoute(
                         fullscreenDialog: true,
-
                         builder: (_) => ProfileSetUp()
                     ),
                   );                },

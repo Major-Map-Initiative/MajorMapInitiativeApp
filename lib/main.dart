@@ -60,8 +60,38 @@ class MajorMapInitiativeApp extends StatelessWidget {
               <int, Color>{},
             ),
             textTheme: TextTheme(
+              headline6: TextStyle(color: Colors.black),
               bodyText1: TextStyle(color: Colors.black),
               headline1: TextStyle(color: Colors.black),
+
+            ),
+            appBarTheme: AppBarTheme(
+              color: Colors.white,
+              iconTheme: IconThemeData(
+                color: Colors.black
+              ),
+              textTheme: TextTheme(
+                headline6: TextStyle(color: Colors.black,
+                fontSize: 20
+                ),
+                bodyText1: TextStyle(color: Colors.black),
+                headline1: TextStyle(color: Colors.black),
+
+              )
+
+            ),
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: Colors.grey.shade200,
+              type: BottomNavigationBarType.fixed,
+              unselectedItemColor: Colors.grey,
+              unselectedLabelStyle: TextStyle(
+                color: Colors.grey
+              ),
+              showUnselectedLabels: true,
+              selectedItemColor: MaterialColor(
+                0xFF182B49,
+                <int, Color>{},
+              ),
             ),
             cupertinoOverrideTheme: CupertinoThemeData(
              primaryColor: CupertinoColors.black
@@ -76,6 +106,36 @@ class MajorMapInitiativeApp extends StatelessWidget {
               bodyText1: TextStyle(color: Colors.white),
               headline1: TextStyle(color: Colors.white),
             ),
+          appBarTheme: AppBarTheme(
+              color: Colors.grey.shade900,
+              iconTheme: IconThemeData(
+                  color: Colors.white,
+              ),
+              textTheme: TextTheme(
+                headline6: TextStyle(color: Colors.white,
+                    fontSize: 20
+                ),
+                button: TextStyle(
+                  color: Colors.white
+                ),
+
+                bodyText1: TextStyle(color: Colors.white),
+                headline1: TextStyle(color: Colors.white),
+
+              )
+
+          ),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+
+            backgroundColor: Colors.grey.shade900,
+            type: BottomNavigationBarType.fixed,
+            unselectedItemColor: Colors.grey.shade200,
+            unselectedLabelStyle: TextStyle(
+                color: Colors.grey
+            ),
+            showUnselectedLabels: true,
+            selectedItemColor: Colors.blue,
+          ),
           cupertinoOverrideTheme: CupertinoThemeData(
             primaryColor: CupertinoColors.white,
             scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray,
