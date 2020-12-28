@@ -8,7 +8,6 @@ import 'package:myapp/screens/signup_page.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-
     print(settings.name);
     switch (settings.name) {
       case RoutePaths.Home:

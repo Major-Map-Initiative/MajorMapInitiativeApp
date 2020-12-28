@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -22,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-   // _userProvider = Provider.of<UserProvider(context);
+    // _userProvider = Provider.of<UserProvider(context);
     SizeConfig().init(context);
     return Scaffold(
       body: buildLoginForm(),
@@ -32,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-   _userProvider = UserProvider();
+    _userProvider = UserProvider();
   }
 
   Center buildLoginForm() {
@@ -49,11 +48,9 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: EdgeInsets.only(top: 50),
                 child: Container(
-
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: TextField(
-
                       style: TextStyle(textBaseline: TextBaseline.alphabetic),
                       decoration: InputDecoration(
                         hintText: "Email",
@@ -74,7 +71,6 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: TextField(
-
                       style: TextStyle(textBaseline: TextBaseline.alphabetic),
                       decoration: InputDecoration(
                         hintText: "Password",
@@ -99,17 +95,18 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: FlatButton(
                   onPressed: () {
-                    _userProvider.login(_emailFieldController.text, _passwordFieldController.text).then((userId){
-
-                    _userProvider.isLoggedIn().then((loggedIn){
-                     if(loggedIn){
-                       Navigator.pushNamed(context, RoutePaths.Home);
-                     }else{
-                       errorDialog(context);
-                     }
+                    _userProvider
+                        .login(_emailFieldController.text,
+                            _passwordFieldController.text)
+                        .then((userId) {
+                      _userProvider.isLoggedIn().then((loggedIn) {
+                        if (loggedIn) {
+                          Navigator.pushNamed(context, RoutePaths.Home);
+                        } else {
+                          errorDialog(context);
+                        }
+                      });
                     });
-                    });
-
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -123,7 +120,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: FlatButton(
                   onPressed: () {
                     Navigator.pushNamed(context, RoutePaths.SignUp);
-
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -141,34 +137,38 @@ class _LoginPageState extends State<LoginPage> {
 
   CupertinoAlertDialog errorDialog(BuildContext context) {
     // set up the button
-    Widget okButton = Platform.isIOS ? CupertinoButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    ) : FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    ) ;
+    Widget okButton = Platform.isIOS
+        ? CupertinoButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        : FlatButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          );
 
     // set up the AlertDialog
-    Widget alert = Platform.isIOS ? CupertinoAlertDialog(
-      title: Text("Unable To Sign You In"),
-      content: Text(
-          "Be sure you are using the correct credentials. Otherwise create an account."),
-      actions: [
-        okButton,
-      ],
-    ) : AlertDialog(
-      title: Text("Unable To Sign You In"),
-      content: Text(
-          "Be sure you are using the correct credentials. Otherwise create an account."),
-      actions: [
-        okButton,
-      ],
-    ) ;
+    Widget alert = Platform.isIOS
+        ? CupertinoAlertDialog(
+            title: Text("Unable To Sign You In"),
+            content: Text(
+                "Be sure you are using the correct credentials. Otherwise create an account."),
+            actions: [
+              okButton,
+            ],
+          )
+        : AlertDialog(
+            title: Text("Unable To Sign You In"),
+            content: Text(
+                "Be sure you are using the correct credentials. Otherwise create an account."),
+            actions: [
+              okButton,
+            ],
+          );
 
     // show the dialog
     showDialog(

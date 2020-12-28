@@ -14,23 +14,24 @@ abstract class BaseAuth {
 
   Future<bool> isEmailVerified();
 }
+
 class FirebaseAuthenticationService implements BaseAuth {
   FirebaseAuth _firebaseAuth;
 
   FirebaseAuthenticationService() {
-   _firebaseAuth = FirebaseAuth.instance;
+    _firebaseAuth = FirebaseAuth.instance;
   }
 
   Future<String> signIn(String email, String password) async {
     FirebaseUser user;
     AuthResult result;
-try {
-   result = await _firebaseAuth.signInWithEmailAndPassword(
-      email: email, password: password);
-}catch(Exception){
-  return null;
-}
-     user = result.user;
+    try {
+      result = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } catch (Exception) {
+      return null;
+    }
+    user = result.user;
 
     return user.uid;
   }
@@ -40,18 +41,17 @@ try {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-       user = result.user;
-    }catch(exception){
+      user = result.user;
+    } catch (exception) {
       return null;
     }
     return user.uid;
   }
 
   Future<FirebaseUser> getCurrentUser() async {
-      FirebaseUser user = await _firebaseAuth.currentUser();
-      print(user.toString());
-      return user;
-
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    print(user.toString());
+    return user;
   }
 
   Future<void> signOut() async {

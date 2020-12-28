@@ -4,10 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/user_provider.dart';
 
-class SignupPage extends StatefulWidget{
+class SignupPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SignupPageState();
-
 }
 
 class _SignupPageState extends State<SignupPage> {
@@ -21,6 +20,7 @@ class _SignupPageState extends State<SignupPage> {
     super.didChangeDependencies();
     _userProvider = UserProvider();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,20 +34,17 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Create Account",
-                  style: TextStyle(
-                    fontSize: 20
-                  ),
+                Text(
+                  "Create Account",
+                  style: TextStyle(fontSize: 20),
                 ),
                 // Email Input
                 Padding(
                   padding: EdgeInsets.only(top: 50),
                   child: Container(
-
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: TextField(
-
                         style: TextStyle(textBaseline: TextBaseline.alphabetic),
                         decoration: InputDecoration(
                           hintText: "Email",
@@ -68,7 +65,6 @@ class _SignupPageState extends State<SignupPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: TextField(
-
                         style: TextStyle(textBaseline: TextBaseline.alphabetic),
                         decoration: InputDecoration(
                           hintText: "Password",
@@ -88,17 +84,12 @@ class _SignupPageState extends State<SignupPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: FlatButton(
                     onPressed: () async {
-
-
-                       if( await _userProvider.signUp(_emailFieldController.text,
-                            _passwordFieldController.text)){
-                         successDialog(context);
-
-                       }else{
-                         errorDialog(context);
-                       }
-
-
+                      if (await _userProvider.signUp(_emailFieldController.text,
+                          _passwordFieldController.text)) {
+                        successDialog(context);
+                      } else {
+                        errorDialog(context);
+                      }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
@@ -107,7 +98,6 @@ class _SignupPageState extends State<SignupPage> {
                     child: Text("Create account"),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -118,34 +108,38 @@ class _SignupPageState extends State<SignupPage> {
 
   CupertinoAlertDialog errorDialog(BuildContext context) {
     // set up the button
-    Widget okButton = Platform.isIOS ? CupertinoButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    ) : FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    ) ;
+    Widget okButton = Platform.isIOS
+        ? CupertinoButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        : FlatButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          );
 
     // set up the AlertDialog
-    Widget alert = Platform.isIOS ? CupertinoAlertDialog(
-      title: Text("Account Error"),
-      content: Text(
-          "Unable to create an account. Verify credentials or email format."),
-      actions: [
-        okButton,
-      ],
-    ) : AlertDialog(
-      title: Text("Account Error"),
-      content: Text(
-          "Unable to create an account. Verify credentials or email format."),
-      actions: [
-        okButton,
-      ],
-    ) ;
+    Widget alert = Platform.isIOS
+        ? CupertinoAlertDialog(
+            title: Text("Account Error"),
+            content: Text(
+                "Unable to create an account. Verify credentials or email format."),
+            actions: [
+              okButton,
+            ],
+          )
+        : AlertDialog(
+            title: Text("Account Error"),
+            content: Text(
+                "Unable to create an account. Verify credentials or email format."),
+            actions: [
+              okButton,
+            ],
+          );
 
     // show the dialog
     showDialog(
@@ -155,36 +149,39 @@ class _SignupPageState extends State<SignupPage> {
       },
     );
   }
+
   CupertinoAlertDialog successDialog(BuildContext context) {
     // set up the button
-    Widget okButton = Platform.isIOS ? CupertinoButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    ) : FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    ) ;
+    Widget okButton = Platform.isIOS
+        ? CupertinoButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        : FlatButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          );
 
     // set up the AlertDialog
-    Widget alert = Platform.isIOS ? CupertinoAlertDialog(
-      title: Text("Success"),
-      content: Text(
-          "Please navigate to sign in page."),
-      actions: [
-        okButton,
-      ],
-    ) : AlertDialog(
-      title: Text("Success"),
-      content: Text(
-          "Please navigate to sign in page."),
-      actions: [
-        okButton,
-      ],
-    ) ;
+    Widget alert = Platform.isIOS
+        ? CupertinoAlertDialog(
+            title: Text("Success"),
+            content: Text("Please navigate to sign in page."),
+            actions: [
+              okButton,
+            ],
+          )
+        : AlertDialog(
+            title: Text("Success"),
+            content: Text("Please navigate to sign in page."),
+            actions: [
+              okButton,
+            ],
+          );
 
     // show the dialog
     showDialog(
