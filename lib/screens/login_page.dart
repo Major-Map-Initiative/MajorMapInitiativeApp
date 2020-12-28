@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   Center buildLoginForm() {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 250, maxHeight: 500),
+        constraints: BoxConstraints(maxWidth: 250, maxHeight: 520),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,9 +49,11 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: EdgeInsets.only(top: 50),
                 child: Container(
+
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: TextField(
+
                       style: TextStyle(textBaseline: TextBaseline.alphabetic),
                       decoration: InputDecoration(
                         hintText: "Email",
@@ -72,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: TextField(
+
                       style: TextStyle(textBaseline: TextBaseline.alphabetic),
                       decoration: InputDecoration(
                         hintText: "Password",
@@ -93,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(10.0),
                 child: FlatButton(
                   onPressed: () {
                     _userProvider.login(_emailFieldController.text, _passwordFieldController.text).then((userId){
@@ -115,7 +118,20 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text("Log In"),
                 ),
               ),
-              Text("Create an account")
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.SignUp);
+
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  color: Colors.blue,
+                  minWidth: 275,
+                  child: Text("Create an account"),
+                ),
+              ),
             ],
           ),
         ),

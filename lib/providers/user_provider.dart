@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/cupertino.dart';
 import 'package:myapp/services/firebase_authentication_service.dart';
 
@@ -17,5 +18,13 @@ class UserProvider extends ChangeNotifier{
   logOut(){
     _firebaseAuthenticationService.signOut();
   }
+  Future<bool> signUp(String email, String password) async{
+   if( await _firebaseAuthenticationService.signUp(email, password) == null){
+     return false;
+   }else{
+     return true;
+   }
+  }
+
 
 }

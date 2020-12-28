@@ -2,7 +2,7 @@
 // import 'package:myapp/screens/LoginSignUpPage.dart';
 // import 'package:myapp/services/firebase_authentication_service.dart';
 // import 'package:myapp/screens/home_page.dart';
-// import 'package:myapp/screens/profile.dart';
+// import 'package:myapp/screens/profile_page.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 //
 // import 'navigation/route_paths.dart';

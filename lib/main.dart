@@ -6,7 +6,7 @@ import 'package:myapp/screens/LoginSignUpPage.dart';
 import 'package:myapp/screens/home_page.dart';
 import 'package:myapp/screens/LoginSignUpPage.dart';
 import 'package:myapp/screens/login_page.dart';
-import 'package:myapp/screens/profile.dart';
+import 'package:myapp/screens/profile_page.dart';
 import 'package:provider/provider.dart';
 import 'package:myapp/navigation/router_paths.dart';
 import 'package:provider/single_child_widget.dart';
@@ -103,8 +103,13 @@ class MajorMapInitiativeApp extends StatelessWidget {
               <int, Color>{},
             ),
             textTheme: TextTheme(
+
               bodyText1: TextStyle(color: Colors.white),
+
               headline1: TextStyle(color: Colors.white),
+              button: TextStyle(
+                color: Colors.white
+              )
             ),
           appBarTheme: AppBarTheme(
               color: Colors.grey.shade900,
@@ -125,6 +130,7 @@ class MajorMapInitiativeApp extends StatelessWidget {
               )
 
           ),
+          scaffoldBackgroundColor: Colors.grey.shade900,
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
 
             backgroundColor: Colors.grey.shade900,

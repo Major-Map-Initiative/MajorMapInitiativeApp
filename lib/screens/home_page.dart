@@ -8,7 +8,7 @@ import 'package:myapp/providers/user_provider.dart';
 import 'package:myapp/navigation/router_paths.dart';
 import 'package:myapp/navigation/router.dart' as appRouter;
 import 'package:myapp/screens/LoginSignUpPage.dart';
-import 'package:myapp/screens/profile.dart';
+import 'package:myapp/screens/profile_page.dart';
 import 'package:myapp/tools/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/services/firebase_authentication_service.dart';
