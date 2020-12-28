@@ -181,39 +181,6 @@ class _HomePageState extends State<HomePage> {
             });
   }
 
-  String sayHello() {
-    String hello;
-
-    DateTime today = new DateTime.now();
-    int hour = today.hour;
-
-    if (hour < 12) {
-      hello = "Good morning";
-    } else if (hour < 18) {
-      hello = "Good afternoon";
-    } else {
-      hello = "Good evening";
-    }
-    return hello + " Peter.";
-  }
-
-  String tellDate() {
-    DateTime today = new DateTime.now();
-    int month = today.month;
-    int year = today.year;
-    int weekday = today.weekday;
-    int day = today.day;
-
-    String toReturn = "It is " +
-        tellWeekday(weekday) +
-        ", " +
-        tellMonth(month) +
-        " " +
-        day.toString() +
-        " " +
-        year.toString();
-    return toReturn;
-  }
 
   signOut() async {
     try {
@@ -227,78 +194,4 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  String tellWeekday(int weekday) {
-    if (weekday == DateTime.sunday) {
-      return "Sunday";
-    } else if (weekday == DateTime.monday) {
-      return "Monday";
-    } else if (weekday == DateTime.tuesday) {
-      return "Tuesday";
-    } else if (weekday == DateTime.wednesday) {
-      return "Wednesday";
-    } else if (weekday == DateTime.thursday) {
-      return "Thursday";
-    } else if (weekday == DateTime.friday) {
-      return "Friday";
-    } else {
-      return "Saturday";
-    }
-  }
-
-  String tellMonth(int month) {
-    if (month == 1) {
-      return "January";
-    } else if (month == 2) {
-      return "February";
-    } else if (month == 3) {
-      return "March";
-    } else if (month == 4) {
-      return "April";
-    } else if (month == 5) {
-      return "May";
-    } else if (month == 6) {
-      return "June";
-    } else if (month == 7) {
-      return "July";
-    } else if (month == 8) {
-      return "August";
-    } else if (month == 9) {
-      return "September";
-    } else if (month == 10) {
-      return "October";
-    } else if (month == 11) {
-      return "November";
-    } else {
-      return "December";
-    }
-  }
-
-  String tellTime() {
-    String appendix;
-    String time;
-    DateTime today = new DateTime.now();
-    int hour = today.hour;
-
-    appendix = (hour < 12) ? "am" : "pm";
-
-    hour = hour % 12;
-    int minute = today.minute;
-
-    String minuteString =
-        (minute < 10) ? "0" + minute.toString() : minute.toString();
-    time = hour.toString() + ":" + minuteString + " " + appendix;
-    return time;
-  }
-
-  void expenses(BuildContext context) {
-    var alert = AlertDialog(
-      title: Text("Welcome to expenses."),
-      content: Text("No expenses logged yet"),
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        });
-  }
 }
