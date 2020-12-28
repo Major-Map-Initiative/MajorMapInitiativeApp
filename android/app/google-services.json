@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "959816353291",
+    "firebase_url": "https://coin-ucsd.firebaseio.com",
+    "project_id": "coin-ucsd",
+    "storage_bucket": "coin-ucsd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959816353291:android:43e504df0d0d708ba0e90e",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959816353291-u49tnomildnri7h7umiq8r7v3crm4ln6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhco0lPpjNszGsvvrwDHdkN0cZNU50RjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959816353291-u49tnomildnri7h7umiq8r7v3crm4ln6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "959816353291-16c5ldo7bod15h02guhj8aq44j253cuu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "personal.NativeCoiniOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
