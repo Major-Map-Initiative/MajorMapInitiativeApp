@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/user_provider.dart';
-import 'package:myapp/tools/router_paths.dart';
+import 'package:myapp/navigation/router_paths.dart';
 import 'package:myapp/tools/sizeConfig.dart';
 import 'package:provider/provider.dart';
 
@@ -96,7 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(15.0),
                 child: FlatButton(
                   onPressed: () {
-                    print("Hello world");
                     _userProvider.login(_emailFieldController.text, _passwordFieldController.text).then((userId){
 
                     _userProvider.isLoggedIn().then((loggedIn){

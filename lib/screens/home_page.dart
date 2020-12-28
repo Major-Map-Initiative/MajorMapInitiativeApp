@@ -5,7 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/providers/user_provider.dart';
-import 'package:myapp/tools/router_paths.dart';
+import 'package:myapp/navigation/router_paths.dart';
+import 'package:myapp/navigation/router.dart' as appRouter;
+import 'package:myapp/screens/LoginSignUpPage.dart';
+import 'package:myapp/screens/profile.dart';
 import 'package:myapp/tools/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/services/firebase_authentication_service.dart';
@@ -14,13 +17,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/material/icons.dart' as defaultIcons;
 import 'dart:convert';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth, this.userId, this.logoutCallback})
-      : super(key: key);
+import 'login_page.dart';
 
-  final BaseAuth auth;
-  final VoidCallback logoutCallback;
-  final String userId;
+class HomePage extends StatefulWidget {
+
+
+
   final String eventsFeedEndpoint =
       "https://o94b6gq4pf.execute-api.us-west-2.amazonaws.com/qa";
   @override
@@ -438,6 +440,7 @@ class _HomePageState extends State<HomePage> {
     ),
     tabBuilder: (BuildContext context, int index){
       return CupertinoTabView(
+        onGenerateRoute: appRouter.Router.generateRoute,
         builder: (BuildContext context) {
           return CupertinoPageScaffold(
          //   backgroundColor: CupertinoColors.darkBackgroundGray,
@@ -451,30 +454,38 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(defaultIcons.Icons.person,
                   //color: CupertinoColors.black,
                 ),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.of(context ).push(
+                    new CupertinoPageRoute(
+                        fullscreenDialog: true,
+
+                        builder: (_) => ProfileSetUp()
+                    ),
+                  );                },
               )
             ),
             child: Center(
               child: CupertinoButton(
                 child: const Text('Next page'),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    CupertinoPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return CupertinoPageScaffold(
-                          navigationBar: CupertinoNavigationBar(
-                            middle: Text('Page 2 of tab $index'),
-                          ),
-                          child: Center(
-                            child: CupertinoButton(
-                              child: const Text('Back'),
-                              onPressed: () { Navigator.of(context).pop(); },
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
+                  Navigator.pushNamed(context,RoutePaths.Profile);
+                  // Navigator.of(context).push(
+                  //   CupertinoPageRoute<void>(
+                  //     builder: (BuildContext context) {
+                  //       return CupertinoPageScaffold(
+                  //         navigationBar: CupertinoNavigationBar(
+                  //           middle: Text('Page 2 of tab $index'),
+                  //         ),
+                  //         child: Center(
+                  //           child: CupertinoButton(
+                  //             child: const Text('Back'),
+                  //             onPressed: () { Navigator.of(context).pop(); },
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // );
                 },
               ),
             ),
@@ -521,7 +532,7 @@ class _HomePageState extends State<HomePage> {
   signOut() async {
     try {
       UserProvider().logOut();
-      Navigator.pushNamed(context, RoutePaths.Login);
+      Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (_) => LoginPage()), ModalRoute.withName(RoutePaths.Login));
     } catch (e) {
       print(e);
     }

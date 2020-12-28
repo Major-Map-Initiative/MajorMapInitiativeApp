@@ -6,8 +6,9 @@ import 'package:myapp/screens/LoginSignUpPage.dart';
 import 'package:myapp/screens/home_page.dart';
 import 'package:myapp/screens/LoginSignUpPage.dart';
 import 'package:myapp/screens/login_page.dart';
+import 'package:myapp/screens/profile.dart';
 import 'package:provider/provider.dart';
-import 'package:myapp/tools/router_paths.dart';
+import 'package:myapp/navigation/router_paths.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,6 +48,11 @@ class MajorMapInitiativeApp extends StatelessWidget {
       child: MaterialApp(
         title: "Major Map Initiative App",
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+          DefaultMaterialLocalizations.delegate,
+          DefaultWidgetsLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+        ],
         theme: ThemeData(
             fontFamily: "SFPro",
             primaryColor: MaterialColor(
@@ -80,9 +86,17 @@ class MajorMapInitiativeApp extends StatelessWidget {
             ),
           ),
         ),
+
         initialRoute: loggedInUser ? RoutePaths.Home : RoutePaths.Login,
         onGenerateRoute: myRouter.Router.generateRoute,
-      ),
+        routes: {
+          RoutePaths.Profile : (context) => LoginPage()
+        },
+    onUnknownRoute: (RouteSettings setting) {
+      String unknownRoute = setting.name;
+      return new MaterialPageRoute(builder: (context) => ProfileSetUp());
+    }
+    ),
     );
   }
 }
